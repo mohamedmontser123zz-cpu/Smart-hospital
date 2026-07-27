@@ -1,0 +1,285 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   MEDGUARDIAN AI DIAGNOSTICS CARD STYLESHEET
+   Futuristic Clinical Medical UI
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.ai-card-container {
+  background: var(--panel, #ffffff);
+  border: 1px solid var(--risk-border, var(--border));
+  border-radius: 20px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.04), 0 0 20px var(--risk-bg, transparent);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.ai-card-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--risk-color, var(--accent));
+  box-shadow: 0 0 14px var(--risk-color, var(--accent));
+}
+
+/* ── Top Header Bar ── */
+.ai-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border, #cbd5e1);
+}
+
+.ai-header-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.ai-brain-badge {
+  position: relative;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: rgba(14, 165, 233, 0.1);
+  border: 1px solid rgba(14, 165, 233, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ai-brain-icon {
+  font-size: 22px;
+}
+
+.ai-live-pulse {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--risk-color, #10b981);
+  box-shadow: 0 0 8px var(--risk-color, #10b981);
+  animation: pulseBlink 1.5s infinite;
+}
+
+@keyframes pulseBlink {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.4); opacity: 0.5; }
+}
+
+.ai-sys-title {
+  font-family: var(--mono, monospace);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: var(--text, #0f172a);
+}
+
+.ai-sys-sub {
+  font-family: var(--mono, monospace);
+  font-size: 10px;
+  color: var(--muted, #475569);
+  margin-top: 2px;
+}
+
+.ai-priority-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-family: var(--mono, monospace);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  text-transform: uppercase;
+}
+
+.priority-icon {
+  font-size: 13px;
+}
+
+/* ── Primary Diagnosis Hero Panel ── */
+.ai-hero-panel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 20px 0 12px;
+  flex-wrap: wrap;
+}
+
+.hero-eyebrow {
+  font-family: var(--mono, monospace);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: var(--muted, #475569);
+  text-transform: uppercase;
+}
+
+.hero-diagnosis-title {
+  font-family: var(--display, sans-serif);
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  margin-top: 4px;
+  line-height: 1.2;
+}
+
+.confidence-score-box {
+  background: var(--risk-bg, rgba(14, 165, 233, 0.08));
+  border: 1px solid var(--risk-border, var(--border));
+  border-radius: 14px;
+  padding: 10px 18px;
+  text-align: right;
+}
+
+.confidence-num {
+  font-family: var(--mono, monospace);
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.confidence-label {
+  font-family: var(--mono, monospace);
+  font-size: 9px;
+  color: var(--muted, #475569);
+  margin-top: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Meter Fill Bar */
+.ai-meter-bar {
+  height: 6px;
+  background: rgba(148, 163, 184, 0.2);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.ai-meter-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Action & Protocol Details Grid ── */
+.ai-details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.ai-detail-card {
+  background: rgba(240, 244, 248, 0.5);
+  border: 1px solid var(--border, #cbd5e1);
+  border-radius: 14px;
+  padding: 14px 16px;
+}
+
+.ai-detail-card.action-card {
+  border-left: 3px solid var(--risk-color, var(--accent));
+}
+
+.ai-detail-card.firstaid-card {
+  border-left: 3px solid #0ea5e9;
+}
+
+.detail-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.detail-icon {
+  font-size: 16px;
+}
+
+.detail-title {
+  font-family: var(--mono, monospace);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: var(--muted, #475569);
+  text-transform: uppercase;
+}
+
+.detail-content {
+  font-family: var(--display, sans-serif);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text, #0f172a);
+  line-height: 1.4;
+}
+
+.detail-content.highlight-text {
+  font-weight: 700;
+}
+
+/* ── Reasoning & Biomarker Patterns Card ── */
+.ai-reasoning-card {
+  background: rgba(240, 244, 248, 0.4);
+  border: 1px solid var(--border, #cbd5e1);
+  border-radius: 14px;
+  padding: 14px 16px;
+}
+
+.reasoning-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.reasoning-icon {
+  font-size: 16px;
+}
+
+.reasoning-title {
+  font-family: var(--mono, monospace);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: var(--muted, #475569);
+  text-transform: uppercase;
+}
+
+.reasoning-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.reasoning-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-family: var(--mono, monospace);
+  font-size: 11px;
+  color: var(--text, #0f172a);
+}
+
+.reasoning-bullet {
+  color: var(--risk-color, var(--accent));
+  font-weight: 800;
+}
+
+.reasoning-text {
+  line-height: 1.4;
+}

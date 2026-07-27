@@ -1,0 +1,35 @@
+.logindiv
+{
+    margin-top: 40px;
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+}
+
+.title
+{
+    font-size: 4em;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: var(--text-primary);
+    font-weight: bold;
+}
+
+.loginform{
+    margin: 40px auto;
+    padding: 50px;
+    width: 50%;
+    background-color: var(--card-bg);
+    border: 1px solid var(--card-border);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+}
+
+
+.formtitle
+{
+    font-size: 3em;
+    font-weight: 700;
+    margin:20px;
+}

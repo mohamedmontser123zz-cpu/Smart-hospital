@@ -1,0 +1,1 @@
+ scp -r "M:\projects2026\smarthospital_MEDex\final_all\resbaerry" respberry@192.168.100.8:/home/respberry/

@@ -1,0 +1,772 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   POWER & BATTERY ROOM STYLESHEET
+   Cyberpunk / Modern Smart Hospital Aesthetic
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.power-room-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  padding-bottom: 40px;
+}
+
+/* ── Top Header Card ── */
+.power-header-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 24px 28px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+}
+
+.power-header-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.power-title-group {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.power-icon-badge {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #0ea5e9, #06b6d4);
+  color: #fff;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 16px rgba(6, 182, 212, 0.35);
+}
+
+.power-main-title {
+  font-family: var(--display);
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: var(--text);
+}
+
+.power-subtitle {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+.power-header-status {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.source-status-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.source-status-badge.grid-mode {
+  background: rgba(14, 165, 233, 0.12);
+  color: #0ea5e9;
+  border: 1px solid rgba(14, 165, 233, 0.3);
+}
+
+.source-status-badge.battery-mode {
+  background: rgba(245, 158, 11, 0.15);
+  color: #f59e0b;
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  animation: pulseWarning 2s infinite;
+}
+
+@keyframes pulseWarning {
+  0%, 100% { box-shadow: 0 0 6px rgba(245, 158, 11, 0.2); }
+  50% { box-shadow: 0 0 16px rgba(245, 158, 11, 0.45); }
+}
+
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 8px currentColor;
+  animation: blink 1.5s infinite;
+}
+
+.demo-toggle-btn {
+  padding: 8px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--border2);
+  background: var(--panel);
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.demo-toggle-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.demo-toggle-btn.active {
+  background: rgba(6, 182, 212, 0.12);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* Header Summary Pills */
+.power-quick-pills {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.quick-pill {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px;
+  background: rgba(14, 165, 233, 0.04);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-family: var(--mono);
+  font-size: 11px;
+}
+
+.pill-label {
+  color: var(--muted);
+}
+
+.pill-val {
+  font-weight: 700;
+  color: var(--text);
+}
+
+.pill-val.accent { color: var(--accent); }
+.pill-val.ok { color: var(--ok); }
+
+/* ── Key Metrics Grid ── */
+.power-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.metric-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.metric-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(6, 182, 212, 0.12);
+}
+
+.metric-card.active-source {
+  border-color: var(--warn);
+  box-shadow: 0 0 16px rgba(245, 158, 11, 0.15);
+}
+
+.metric-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.metric-icon {
+  font-size: 20px;
+}
+
+.metric-tag {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: rgba(148, 163, 184, 0.12);
+  color: var(--muted);
+  letter-spacing: 1px;
+}
+
+.metric-title {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+.metric-value-row {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin: 10px 0 12px;
+}
+
+.metric-num {
+  font-family: var(--mono);
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1;
+}
+
+.text-accent { color: var(--accent) !important; }
+.text-ok { color: var(--ok) !important; }
+.text-warn { color: var(--warn) !important; }
+
+.metric-unit {
+  font-family: var(--mono);
+  font-size: 14px;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+/* Progress and Fill Bars */
+.soc-progress-container, .current-meter-bar {
+  height: 6px;
+  background: rgba(148, 163, 184, 0.2);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.soc-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #f59e0b, #10b981);
+  border-radius: 3px;
+  transition: width 0.5s ease;
+}
+
+.current-meter-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #0ea5e9, #06b6d4);
+  border-radius: 3px;
+  transition: width 0.5s ease;
+}
+
+.buck-sub-channels, .power-breakdown {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+
+.metric-footer {
+  margin-top: auto;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--muted);
+}
+
+/* ── Subnav Buttons ── */
+.power-subnav {
+  display: flex;
+  gap: 10px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 8px;
+}
+
+.subnav-btn {
+  padding: 10px 18px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  background: none;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.subnav-btn:hover {
+  color: var(--text);
+  background: rgba(14, 165, 233, 0.06);
+}
+
+.subnav-btn.active {
+  background: var(--panel);
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: 0 2px 10px rgba(6, 182, 212, 0.1);
+}
+
+/* ── Microgrid Interactive Topology ── */
+.microgrid-card, .pins-card, .history-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 24px;
+}
+
+.card-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.card-heading h3 {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: var(--text);
+}
+
+.live-tag {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: rgba(16, 185, 129, 0.15);
+  color: var(--ok);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.topology-diagram {
+  display: grid;
+  grid-template-columns: 1fr 220px 1fr;
+  gap: 20px;
+  align-items: center;
+  padding: 20px 10px;
+}
+
+@media (max-width: 900px) {
+  .topology-diagram {
+    grid-template-columns: 1fr;
+  }
+}
+
+.topo-column {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.topo-node {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+  background: rgba(240, 244, 248, 0.5);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  position: relative;
+  transition: all 0.3s;
+}
+
+.topo-node.active {
+  background: rgba(6, 182, 212, 0.08);
+  border-color: var(--accent);
+  box-shadow: 0 0 16px rgba(6, 182, 212, 0.15);
+}
+
+.topo-node.inactive {
+  opacity: 0.6;
+}
+
+.topo-node.load-node {
+  background: rgba(16, 185, 129, 0.05);
+  border-color: rgba(16, 185, 129, 0.3);
+}
+
+.topo-node-icon {
+  font-size: 26px;
+}
+
+.topo-node-info {
+  flex: 1;
+}
+
+.topo-node-title {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: var(--text);
+}
+
+.topo-node-detail {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.topo-node-value {
+  font-family: var(--mono);
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--accent);
+  margin-top: 4px;
+}
+
+.topo-badge {
+  font-family: var(--mono);
+  font-size: 8px;
+  font-weight: 700;
+  padding: 3px 6px;
+  border-radius: 4px;
+  background: var(--border);
+  color: var(--muted);
+}
+
+.topo-node.active .topo-badge {
+  background: var(--accent);
+  color: #fff;
+}
+
+.topo-badge.load {
+  background: var(--ok);
+  color: #fff;
+}
+
+/* Central Relay Switch Box */
+.topo-center {
+  display: flex;
+  justify-content: center;
+}
+
+.relay-box {
+  background: var(--panel);
+  border: 2px dashed var(--accent);
+  border-radius: 16px;
+  padding: 20px 16px;
+  text-align: center;
+  width: 100%;
+  box-shadow: 0 0 20px rgba(6, 182, 212, 0.1);
+}
+
+.relay-icon { font-size: 28px; }
+
+.relay-title {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: var(--text);
+  margin-top: 6px;
+}
+
+.relay-pin {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.relay-state {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.relay-state.grid-active {
+  background: rgba(14, 165, 233, 0.15);
+  color: #0ea5e9;
+}
+
+.relay-state.battery-active {
+  background: rgba(245, 158, 11, 0.2);
+  color: #f59e0b;
+}
+
+/* ── Telemetry Channel Cards Grid ── */
+.channels-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.channel-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.channel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.channel-title {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.channel-status-pill {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
+.channel-status-pill.active {
+  background: rgba(16, 185, 129, 0.15);
+  color: var(--ok);
+}
+
+.channel-status-pill.standby {
+  background: rgba(148, 163, 184, 0.15);
+  color: var(--muted);
+}
+
+.channel-status-pill.consuming {
+  background: rgba(14, 165, 233, 0.15);
+  color: var(--accent2);
+}
+
+.channel-readings {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.reading-box {
+  background: rgba(240, 244, 248, 0.6);
+  border-radius: 12px;
+  padding: 10px 8px;
+  text-align: center;
+}
+
+.reading-name {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+.reading-val {
+  font-family: var(--mono);
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--text);
+  margin: 4px 0 2px;
+}
+
+.reading-val .u {
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.reading-sub {
+  font-family: var(--mono);
+  font-size: 8px;
+  color: var(--muted);
+  opacity: 0.7;
+}
+
+/* ── Hardware Pin Table ── */
+.pin-table, .history-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--mono);
+  font-size: 11px;
+}
+
+.pin-table th, .history-table th {
+  text-align: left;
+  padding: 10px 12px;
+  background: rgba(240, 244, 248, 0.8);
+  color: var(--muted);
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  border-bottom: 1px solid var(--border);
+}
+
+.pin-table td, .history-table td {
+  padding: 12px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+}
+
+.pin-table code {
+  background: rgba(14, 165, 233, 0.1);
+  color: var(--accent);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 11px;
+}
+
+.status-tag {
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.status-tag.active {
+  background: rgba(16, 185, 129, 0.15);
+  color: var(--ok);
+}
+
+.status-tag.normal {
+  background: rgba(148, 163, 184, 0.15);
+  color: var(--muted);
+}
+
+/* ── Telemetry History Table ── */
+.history-count {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--muted);
+}
+
+.history-table-wrapper {
+  overflow-x: auto;
+}
+
+.mono-time {
+  color: var(--muted);
+}
+
+/* ── Offline Waiting Card Styles ── */
+.power-offline-card {
+  background: var(--panel);
+  border: 1px dashed var(--border2);
+  border-radius: 20px;
+  padding: 48px 32px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+}
+
+.offline-icon {
+  font-size: 44px;
+  animation: floatBounce 3s ease-in-out infinite;
+}
+
+@keyframes floatBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.power-offline-card h2 {
+  font-family: var(--display);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.power-offline-card p {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--muted);
+  max-width: 540px;
+  line-height: 1.6;
+}
+
+.offline-mode {
+  background: rgba(148, 163, 184, 0.12) !important;
+  color: var(--muted) !important;
+  border: 1px solid var(--border) !important;
+}
+
+.pulse-dot.offline {
+  background: var(--muted) !important;
+  box-shadow: none !important;
+}
+
+.live-hardware-tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 12px;
+  background: rgba(16, 185, 129, 0.12);
+  color: var(--ok);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.offline-pin-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  width: 100%;
+  max-width: 700px;
+  margin-top: 16px;
+}
+
+.offline-pin-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px;
+  background: rgba(240, 244, 248, 0.6);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+
+.pin-num {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--accent);
+}
+
+.pin-desc {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 4px;
+}
