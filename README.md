@@ -77,8 +77,4 @@ The system uses a well-defined MQTT topic structure for seamless communication:
 - `esp32/location`: Robot navigation tracking.
 - `battery_room/#` & `power_room/#`: Power consumption metrics.
 
-## 👥 Contributors
-- **Mohamed Montaser**
 
----
-*Developed with ❤️ for the future of smart healthcare.*
