@@ -43,14 +43,41 @@ export default function RoomPanel({ room, sensors, updated, lastSeen, controls, 
         </div>
       )}
 
+      {/* ── Fire Alarm banner ──────────────────────────────────────────────── */}
+      {sensors.fire_alarm === '1' && (
+        <div className="emergency-banner fire-alarm-banner">
+          <span className="emergency-icon">🧯</span>
+          <span>FIRE DETECTED — Water pump activated, buzzer sounding for 10s</span>
+        </div>
+      )}
+
+      {/* ── Buzzer active banner ───────────────────────────────────────────── */}
+      {sensors.buzzer === '1' && (
+        <div className="emergency-banner buzzer-banner">
+          <span className="emergency-icon">🔔</span>
+          <span>BUZZER ACTIVE — Alarm sounding (GPIO 26)</span>
+        </div>
+      )}
+
       {/* ── Sensor cards grid ─────────────────────────────────────────────── */}
       <div className="sensors-grid">
         {Object.entries(SENSOR_DEFS).map(([key, def]) => {
-          const val    = sensors[key];
+          const rawVal = sensors[key];
           const isNew  = updated[key] && Date.now() - updated[key] < 2000;
           const isBool = def.bool;
-          const boolOn = val === '1' || val === 'true';
+          const boolOn = rawVal === '1' || rawVal === 'true';
           const isEmergencyCard = key === 'emergency';
+
+          // Convert raw ADC (0-4095) to percentage for sensors with '%' unit
+          // Exclude 'humidity' which is already a real percentage from DHT22
+          const ADC_SENSORS = ['mq2', 'mq135', 'flame', 'rain', 'ldr'];
+          let displayVal = rawVal;
+          if (!isBool && ADC_SENSORS.includes(key) && rawVal !== '--' && rawVal !== null && rawVal !== undefined) {
+            const num = parseFloat(rawVal);
+            if (!isNaN(num)) {
+              displayVal = ((num / 4095) * 100).toFixed(1);
+            }
+          }
 
           return (
             <div
@@ -69,8 +96,8 @@ export default function RoomPanel({ room, sensors, updated, lastSeen, controls, 
               <div className="sensor-name">{def.label}</div>
               <div className={`sensor-value ${isBool ? (boolOn ? 'bool-on' : 'bool-off') : ''}`}>
                 {isBool
-                  ? (val === '--' ? '--' : boolOn ? 'YES' : 'NO')
-                  : val}
+                  ? (rawVal === '--' ? '--' : boolOn ? 'YES' : 'NO')
+                  : displayVal}
               </div>
               {!isBool && <div className="sensor-unit">{def.unit}</div>}
               {isEmergencyCard && (

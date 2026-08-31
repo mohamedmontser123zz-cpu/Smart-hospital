@@ -19,6 +19,7 @@ export default function PowerRoomView({ data, updated = {}, lastSeen }) {
   const iRoom2Raw  = root?.i_room2     ?? root?.room2?.i;        // milliamps or amps
   const iTotalRaw  = root?.i_total     ?? root?.total_current;   // milliamps or amps
   const activeRaw  = root?.active_source ?? root?.battery?.active; // 0 or 1
+  const battHoursRaw = root?.battery_hours;                       // minutes from firmware
 
   // Parse & convert to standard human-readable units (Volts & Amperes)
   const parseVoltage = (raw) => {
@@ -203,6 +204,27 @@ export default function PowerRoomView({ data, updated = {}, lastSeen }) {
               <div className="sensor-name">BATTERY POWER</div>
               <div className="sensor-value">{fmt(pBatt)}</div>
               <div className="sensor-unit">W</div>
+            </div>
+
+            <div className={`sensor-card ${isNew ? 'flash' : ''}`} style={{ '--c': '#22d3ee' }}>
+              <div className="sensor-glow" />
+              <div className="sensor-top">
+                <span className="sensor-icon">⏱</span>
+                <span className={`sensor-live-dot ${isNew ? 'on' : ''}`} />
+              </div>
+              <div className="sensor-name">EST. RUNTIME</div>
+              <div className="sensor-value">
+                {(() => {
+                  if (battHoursRaw === null || battHoursRaw === undefined || battHoursRaw === '--') return '--';
+                  const mins = parseInt(battHoursRaw);
+                  if (isNaN(mins) || mins <= 0) return '--';
+                  if (mins >= 9999) return '∞';
+                  const h = Math.floor(mins / 60);
+                  const m = mins % 60;
+                  return `${h}h ${m}m`;
+                })()}
+              </div>
+              <div className="sensor-unit">NCR18650B 3350mAh</div>
             </div>
           </div>
         </div>

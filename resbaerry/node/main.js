@@ -44,7 +44,7 @@ console.log(`[MQTT] Connecting to broker at ${BROKER_URI}`);
 
 // ── Topics matching the React client ──
 const ROOMS          = ['room1', 'room2'];
-const SENSOR_TOPICS  = ['temp', 'humidity', 'mq2', 'mq135', 'flame', 'rain', 'ldr', 'occupancy', 'magnet', 'emergency'];
+const SENSOR_TOPICS  = ['temp', 'humidity', 'mq2', 'mq135', 'flame', 'rain', 'ldr', 'occupancy', 'emergency'];
 const CONTROL_TOPICS = ['fan', 'led', 'pump'];
 const WATCH_TOPICS   = ['status', 'heart_rate', 'spo2', 'temp', 'humidity', 'gsr', 'medex', 'battery', 'finger', 'gsr_contact'];
 

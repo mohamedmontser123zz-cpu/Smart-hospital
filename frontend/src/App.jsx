@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { BACKEND, CONTROL_DEFS } from './config/constants';
 import { useMqtt } from './hooks/useMqtt';
 import { useEmergencyAlarm } from './hooks/useEmergencyAlarm';
@@ -8,6 +8,7 @@ import RobotView from './components/RobotView';
 import RoomPanel from './components/RoomPanel';
 import PowerRoomView from './components/PowerRoomView';
 import WatchView from './components/WatchView';
+import LoginPage from './components/LoginPage';
 import './App.css';
 import './PowerRoomStyle.css';
 /**
@@ -35,6 +36,24 @@ export default function App() {
   const [activeTab, setActiveTab] = useState('robot');
   const [emergencyMode, setEmergencyMode] = useState(false);
 
+  // ── Smartwatch auth state (login only gates the watch tab) ─────────────────
+  const [watchUser, setWatchUser] = useState(() => {
+    try {
+      const saved = localStorage.getItem('medex_watch_user');
+      return saved ? JSON.parse(saved) : null;
+    } catch { return null; }
+  });
+
+  const handleWatchLogin = (userData) => {
+    setWatchUser(userData);
+    localStorage.setItem('medex_watch_user', JSON.stringify(userData));
+  };
+
+  const handleWatchLogout = () => {
+    setWatchUser(null);
+    localStorage.removeItem('medex_watch_user');
+  };
+
   const { startAlarm, stopAlarm } = useEmergencyAlarm();
 
   const {
@@ -56,15 +75,40 @@ export default function App() {
   } = useMqtt();
 
   // ── Emergency mode toggle ─────────────────────────────────────────────────
+  const emergencyTimerRef = useRef(null);
+
   const triggerEmergency = useCallback(() => {
     setEmergencyMode(true);
     startAlarm();
-  }, [startAlarm]);
+
+    // Auto-dismiss after 10 seconds
+    if (emergencyTimerRef.current) clearTimeout(emergencyTimerRef.current);
+    emergencyTimerRef.current = setTimeout(() => {
+      setEmergencyMode(false);
+      stopAlarm();
+      emergencyTimerRef.current = null;
+    }, 10000);
+  }, [startAlarm, stopAlarm]);
 
   const dismissEmergency = useCallback(() => {
     setEmergencyMode(false);
     stopAlarm();
+    if (emergencyTimerRef.current) {
+      clearTimeout(emergencyTimerRef.current);
+      emergencyTimerRef.current = null;
+    }
   }, [stopAlarm]);
+
+  // ── Auto-trigger emergency from MQTT sensor data (emergency btn or fire alarm) ──
+  useEffect(() => {
+    const room1 = sensors.room1 || {};
+    const isEmergency = room1.emergency === '1';
+    const isFireAlarm = room1.fire_alarm === '1';
+
+    if ((isEmergency || isFireAlarm) && !emergencyMode) {
+      triggerEmergency();
+    }
+  }, [sensors.room1?.emergency, sensors.room1?.fire_alarm]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Toggle body class so the CSS animations apply globally
   useEffect(() => {
@@ -175,12 +219,20 @@ export default function App() {
             lastSeen={powerRoomLastSeen}
           />
         )}
+
+        {/* ── Watch tab: requires login ──────────────────────────────────── */}
         {activeTab === 'watch' && (
-          <WatchView
-            watch={watch}
-            updated={watchUpdated}
-            lastSeen={watchLastSeen}
-          />
+          watchUser ? (
+            <WatchView
+              watch={watch}
+              updated={watchUpdated}
+              lastSeen={watchLastSeen}
+              user={watchUser}
+              onLogout={handleWatchLogout}
+            />
+          ) : (
+            <LoginPage onLogin={handleWatchLogin} />
+          )
         )}
 
       </main>

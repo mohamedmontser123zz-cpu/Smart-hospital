@@ -15,14 +15,15 @@ export const ROOMS = [
 export const SENSOR_DEFS = {
   temp:      { label: 'Temperature', unit: '°C',  icon: '🌡', color: '#f97316', topic: 'temp'      },
   humidity:  { label: 'Humidity',    unit: '%',    icon: '💧', color: '#38bdf8', topic: 'humidity'  },
-  mq2:       { label: 'Gas MQ2',     unit: 'ADC',  icon: '🔥', color: '#f59e0b', topic: 'mq2'       },
-  mq135:     { label: 'Air Quality', unit: 'ADC',  icon: '🌫', color: '#a78bfa', topic: 'mq135'     },
-  flame:     { label: 'Flame',       unit: 'ADC',  icon: '🔥', color: '#ef4444', topic: 'flame'     },
-  rain:      { label: 'Raindrop',    unit: 'ADC',  icon: '☔', color: '#0ea5e9', topic: 'rain'      },
-  ldr:       { label: 'Light',       unit: 'ADC',  icon: '☀',  color: '#fcd34d', topic: 'ldr'       },
-  occupancy: { label: 'Occupancy',   unit: '',     icon: '🚶', color: '#10b981', topic: 'occupancy', bool: true },
-  magnet:    { label: 'Door',        unit: '',     icon: '🔒', color: '#ec4899', topic: 'magnet',    bool: true },
-  emergency: { label: 'Emergency',   unit: '',     icon: '🚨', color: '#ff1744', topic: 'emergency', bool: true },
+  mq2:       { label: 'Gas MQ2',     unit: '%',    icon: '🔥', color: '#f59e0b', topic: 'mq2'       },
+  mq135:     { label: 'Air Quality', unit: '%',    icon: '🌫', color: '#a78bfa', topic: 'mq135'     },
+  flame:     { label: 'Flame',       unit: '%',    icon: '🔥', color: '#ef4444', topic: 'flame'     },
+  rain:      { label: 'Raindrop',    unit: '%',    icon: '☔', color: '#0ea5e9', topic: 'rain'      },
+  ldr:       { label: 'Light',       unit: '%',    icon: '☀',  color: '#fcd34d', topic: 'ldr'       },
+  occupancy:   { label: 'Occupancy',   unit: '',     icon: '🚶', color: '#10b981', topic: 'occupancy',  bool: true },
+  emergency:   { label: 'Emergency',   unit: '',     icon: '🚨', color: '#ff1744', topic: 'emergency',  bool: true },
+  buzzer:      { label: 'Buzzer',      unit: '',     icon: '🔔', color: '#ff9100', topic: 'buzzer',     bool: true },
+  fire_alarm:  { label: 'Fire Alarm',  unit: '',     icon: '🧯', color: '#d50000', topic: 'fire_alarm', bool: true },
 };
 
 // ─── Control / actuator definitions ──────────────────────────────────────────
@@ -49,7 +50,7 @@ export const WATCH_DEFS = {
 
 // ─── Power / Battery Room definitions ─────────────────────────────────────────
 // Topics published by the Battery Room ESP32 on battery_room/<topic>
-export const POWER_ROOM_TOPICS = ['v_battery', 'v_main', 'v_room1', 'v_room2', 'i_room1', 'i_room2', 'i_total', 'active_source'];
+export const POWER_ROOM_TOPICS = ['v_battery', 'v_main', 'v_room1', 'v_room2', 'i_room1', 'i_room2', 'i_total', 'active_source', 'battery_hours'];
 
 export const emptyPowerRoom = () => ({
   v_battery: null,
@@ -60,6 +61,7 @@ export const emptyPowerRoom = () => ({
   i_room2: null,
   i_total: null,
   active_source: null,
+  battery_hours: null,
 });
 
 export const emptyWatch = () =>

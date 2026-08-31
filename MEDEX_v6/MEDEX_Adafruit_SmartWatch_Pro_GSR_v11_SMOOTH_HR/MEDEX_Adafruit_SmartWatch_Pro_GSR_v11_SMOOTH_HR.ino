@@ -59,7 +59,7 @@
 // Deep Sleep Configuration
 // ─────────────────────────────────────────────────────────────
 #define DEEP_SLEEP_DURATION_US  (10ULL * 60 * 1000000)  // 10 minutes in µs
-#define AWAKE_WINDOW_MS         30000                    // 30 seconds awake
+#define AWAKE_WINDOW_MS         (5ULL * 60 * 1000000)                     //5 minutes  awake
 #define BUTTON_WAKE_PIN         GPIO_NUM_14              // ext0 wake pin
 
 // RTC memory — survives deep sleep

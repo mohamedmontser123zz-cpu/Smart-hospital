@@ -40,7 +40,7 @@ console.log(`[MQTT] Connecting to broker at ${BROKER_URI}`);
 
 // ── Topics matching the React client ──
 const ROOMS          = ['room1', 'room2'];
-const SENSOR_TOPICS  = ['temp', 'humidity', 'mq2', 'mq135', 'flame', 'rain', 'ldr', 'occupancy', 'magnet', 'emergency'];
+const SENSOR_TOPICS  = ['temp', 'humidity', 'mq2', 'mq135', 'flame', 'rain', 'ldr', 'occupancy', 'emergency'];
 const CONTROL_TOPICS = ['fan', 'led', 'pump'];
 const BATTERY_ROOM_TOPICS = ['v_battery', 'v_main', 'i_room1', 'i_room2', 'i_total', 'active_source'];
 const WATCH_TOPICS   = ['status', 'heart_rate', 'spo2', 'temp', 'humidity', 'gsr', 'medex', 'battery', 'finger', 'gsr_contact'];
@@ -202,6 +202,49 @@ app.post('/control/:room/:device', (req, res) => {
 // ── API: health check ──
 app.get('/health', (req, res) => {
   res.json({ ok: true, mqtt: client.connected, broker: BROKER_IP });
+});
+
+// ── User Authentication (users.txt) ──────────────────────────────────────────
+const usersFile = path.join(__dirname, 'users.txt');
+
+function loadUsers() {
+  if (!fs.existsSync(usersFile)) {
+    const defaults = ['admin@medex.com,admin123,Admin'];
+    fs.writeFileSync(usersFile, defaults.join('\n') + '\n');
+  }
+  const content = fs.readFileSync(usersFile, 'utf8');
+  const users = [];
+  content.split('\n').forEach(line => {
+    if (line.trim()) {
+      const [email, password, name] = line.split(',');
+      users.push({ email, password, name });
+    }
+  });
+  return users;
+}
+
+app.post('/login', (req, res) => {
+  const { email, password } = req.body;
+  const users = loadUsers();
+  const user = users.find(u => u.email === email && u.password === password);
+  if (user) {
+    res.json({ success: true, user: { email: user.email, name: user.name } });
+  } else {
+    res.status(401).json({ success: false, message: 'Invalid email or password' });
+  }
+});
+
+app.post('/signup', (req, res) => {
+  const { email, password, name } = req.body;
+  if (!email || !password || !name) {
+    return res.status(400).json({ success: false, message: 'All fields are required' });
+  }
+  const users = loadUsers();
+  if (users.some(u => u.email === email)) {
+    return res.status(409).json({ success: false, message: 'User already exists' });
+  }
+  fs.appendFileSync(usersFile, `${email},${password},${name}\n`);
+  res.json({ success: true, user: { email, name } });
 });
 
 // ── Catch-all: serve React for any route ──
